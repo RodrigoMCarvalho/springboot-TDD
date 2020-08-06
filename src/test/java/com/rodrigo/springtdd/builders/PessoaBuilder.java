@@ -1,6 +1,5 @@
 package com.rodrigo.springtdd.builders;
 
-import com.rodrigo.springtdd.TelefoneBuilder;
 import com.rodrigo.springtdd.model.Pessoa;
 
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 package com.rodrigo.springtdd.service;
 
-import com.rodrigo.springtdd.TelefoneBuilder;
+import com.rodrigo.springtdd.builders.TelefoneBuilder;
 import com.rodrigo.springtdd.builders.PessoaBuilder;
 import com.rodrigo.springtdd.exception.TelefoneNotFoundException;
 import com.rodrigo.springtdd.exception.UnicidadeCPFException;
@@ -62,8 +62,8 @@ public class PessoaServiceTest {
         when(pessoaRepository.findByTelefoneDddAndTelefoneNumero(DDD, TELEFONE)).thenReturn(Optional.of(pessoa));
 
         Pessoa pessoa = pessoaService.buscarProTelefone(TelefoneBuilder.umTelefone().builder());
-        verify(pessoaRepository).findByTelefoneDddAndTelefoneNumero(DDD, TELEFONE);
 
+        verify(pessoaRepository).findByTelefoneDddAndTelefoneNumero(DDD, TELEFONE);
         assertThat(pessoa).isNotNull();
         assertThat(pessoa.getNome()).isEqualTo(NOME);
         assertThat(pessoa.getCpf()).isEqualTo(CPF);

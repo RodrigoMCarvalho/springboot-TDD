@@ -1,4 +1,4 @@
-package com.rodrigo.springtdd;
+package com.rodrigo.springtdd.builders;
 
 import com.rodrigo.springtdd.model.Telefone;
 
