@@ -1,10 +1,23 @@
 package com.rodrigo.springtdd.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "telefone")
 public class Telefone {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
+
+    @Column(length = 2, nullable = false)
     private String ddd;
+
+    @Column(length = 9, nullable = false)
     private String numero;
+
+    @ManyToOne
+    @JoinColumn(name = "codigo_pessoa")
     private Pessoa pessoa;
 
     public Long getCodigo() {

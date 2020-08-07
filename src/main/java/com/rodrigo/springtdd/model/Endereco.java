@@ -1,7 +1,14 @@
 package com.rodrigo.springtdd.model;
 
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
+@Table(name = "endereco")
 public class Endereco {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
     private String logradouro;
     private Integer numero;
@@ -9,6 +16,9 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String estado;
+
+    @ManyToOne
+    @JoinColumn(name = "codigo_pessoa")
     private Pessoa pessoa;
 
     public Long getCodigo() {
@@ -73,5 +83,18 @@ public class Endereco {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Endereco endereco = (Endereco) o;
+        return codigo.equals(endereco.codigo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo);
     }
 }
