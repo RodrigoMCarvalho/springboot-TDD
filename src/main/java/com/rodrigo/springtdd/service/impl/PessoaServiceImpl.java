@@ -21,7 +21,7 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public Pessoa salvar(Pessoa pessoa) throws UnicidadeTelefoneException, UnicidadeCPFException {
-        Optional<Pessoa> pessoaCPF = repository.findByCPF(pessoa.getCpf());
+        Optional<Pessoa> pessoaCPF = repository.findByCpf(pessoa.getCpf());
         if(pessoaCPF.isPresent()) {
             throw new UnicidadeCPFException();
         }

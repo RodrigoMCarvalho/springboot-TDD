@@ -47,7 +47,7 @@ public class PessoaServiceTest {
 
     @Test(expected = UnicidadeCPFException.class)
     public void naoDeveSalvarDuasPessoasComOMesmaCPF() throws Exception {
-        when(pessoaRepository.findByCPF(CPF)).thenReturn(Optional.of(pessoa));
+        when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.of(pessoa));
         pessoaService.salvar(pessoa);
     }
 
