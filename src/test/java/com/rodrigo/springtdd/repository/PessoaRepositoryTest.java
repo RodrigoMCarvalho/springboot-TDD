@@ -1,7 +1,6 @@
 package com.rodrigo.springtdd.repository;
 
 import com.rodrigo.springtdd.model.Pessoa;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +39,23 @@ public class PessoaRepositoryTest {
         Optional<Pessoa> pessoaCPF = sut.findByCpf("8673054354");
 
         assertThat(pessoaCPF.isPresent()).isFalse();
+    }
+
+    @Test
+    public void deveEncontrarPessoaPorDddENumeroDeTelefone() {
+        Optional<Pessoa> pessoaOpt = sut.findByTelefoneDddAndTelefoneNumero("41", "999570146");
+        Pessoa pessoa = pessoaOpt.get();
+
+        assertThat(pessoaOpt.isPresent()).isTrue();
+        assertThat(pessoa.getCodigo()).isEqualTo(1L);
+        assertThat(pessoa.getNome()).isEqualTo("Iago");
+        assertThat(pessoa.getCpf()).isEqualTo("86730543540");
+    }
+
+    @Test
+    public void naoDeveEncontrarPessoaCujoDddETelefoneNaoEstejamCadastrados() {
+        Optional<Pessoa> pessoaOpt = sut.findByTelefoneDddAndTelefoneNumero("01", "699570146");
+
+        assertThat(pessoaOpt.isPresent()).isFalse();
     }
 }
