@@ -35,19 +35,10 @@ public class PessoaRepositoryTest {
         assertThat(pessoa.getCpf()).isEqualTo("86730543540");
     }
 
+    @Test
+    public void naoDeveLocalizarPessoaComCpfInexistente() {
+        Optional<Pessoa> pessoaCPF = sut.findByCpf("8673054354");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        assertThat(pessoaCPF.isPresent()).isFalse();
+    }
 }
