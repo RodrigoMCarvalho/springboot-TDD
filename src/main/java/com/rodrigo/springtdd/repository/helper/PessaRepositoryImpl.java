@@ -16,7 +16,7 @@ public class PessaRepositoryImpl implements PessoaRepositoryQueries {
     private EntityManager entityManager;
 
     @Override
-    public List<Pessoa> filtrar(PessoaFiltro filtro) {
+    public List<Pessoa> pesquisar(PessoaFiltro filtro) {
         final StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p FROM Pessoa p WHERE 1=1 ");
         Query query = entityManager.createQuery(sb.toString(), Pessoa.class);

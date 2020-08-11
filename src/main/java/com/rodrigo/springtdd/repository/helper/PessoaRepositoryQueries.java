@@ -11,5 +11,5 @@ import java.util.List;
 public interface PessoaRepositoryQueries {
 
     @Bean
-    List<Pessoa> filtrar(PessoaFiltro filtro);
+    List<Pessoa> pesquisar(PessoaFiltro filtro);
 }

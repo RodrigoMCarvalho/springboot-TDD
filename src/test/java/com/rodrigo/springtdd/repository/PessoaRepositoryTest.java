@@ -67,7 +67,7 @@ public class PessoaRepositoryTest {
         PessoaFiltro filtro = new PessoaFiltro();
         filtro.setNome("a");
 
-        List<Pessoa> pessoas = sut.filtrar(filtro);
+        List<Pessoa> pessoas = sut.pesquisar(filtro);
 
         assertThat(pessoas.size()).isEqualTo(3);
 
