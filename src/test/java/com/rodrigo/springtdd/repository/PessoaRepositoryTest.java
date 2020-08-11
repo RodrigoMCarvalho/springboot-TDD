@@ -1,5 +1,6 @@
 package com.rodrigo.springtdd.repository;
 
+import com.rodrigo.springtdd.filtro.PessoaFiltro;
 import com.rodrigo.springtdd.model.Pessoa;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,9 +10,11 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -58,4 +61,28 @@ public class PessoaRepositoryTest {
 
         assertThat(pessoaOpt.isPresent()).isFalse();
     }
+
+    @Test
+    public void deveFiltrarPessoaPorParteDoNome() {
+        PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setNome("a");
+
+        List<Pessoa> pessoas = sut.filtrar(filtro);
+
+        assertThat(pessoas.size()).isEqualTo(3);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
