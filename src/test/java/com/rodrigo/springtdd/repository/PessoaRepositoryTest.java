@@ -67,13 +67,20 @@ public class PessoaRepositoryTest {
         PessoaFiltro filtro = new PessoaFiltro();
         filtro.setNome("a");
 
-        List<Pessoa> pessoas = sut.pesquisar(filtro);
+        List<Pessoa> pessoas = sut.filtrar(filtro);
 
         assertThat(pessoas.size()).isEqualTo(3);
-
     }
 
+    @Test
+    public void deveFiltrarPessoaPorParteDoCpf() {
+        PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setCpf("78");
 
+        List<Pessoa> pessoas = sut.filtrar(filtro);
+
+        assertThat(pessoas.size()).isEqualTo(3);
+    }
 
 
 

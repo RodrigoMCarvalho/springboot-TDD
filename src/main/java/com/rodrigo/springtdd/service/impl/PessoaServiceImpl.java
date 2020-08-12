@@ -1,5 +1,6 @@
 package com.rodrigo.springtdd.service.impl;
 
+import com.rodrigo.springtdd.exception.CpfNotFoundException;
 import com.rodrigo.springtdd.exception.TelefoneNotFoundException;
 import com.rodrigo.springtdd.exception.UnicidadeCPFException;
 import com.rodrigo.springtdd.exception.UnicidadeTelefoneException;
@@ -35,10 +36,17 @@ public class PessoaServiceImpl implements PessoaService {
         return repository.save(pessoa);
     }
 
+
     @Override
-    public Pessoa buscarProTelefone(Telefone telefone) throws TelefoneNotFoundException {
+    public Pessoa buscarPorTelefone(Telefone telefone) throws TelefoneNotFoundException {
         Optional<Pessoa> optional = repository.findByTelefoneDddAndTelefoneNumero(telefone.getDdd(), telefone.getNumero());
         return optional.orElseThrow(() -> new TelefoneNotFoundException());
+    }
+
+    @Override
+    public Pessoa buscarPorCpf(String cpf) throws CpfNotFoundException {
+        Optional<Pessoa> optional = repository.findByCpf(cpf);
+        return optional.orElseThrow(() -> new CpfNotFoundException("CPF inválido"));
     }
 
 }
