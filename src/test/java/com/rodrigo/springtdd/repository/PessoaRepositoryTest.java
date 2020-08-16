@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PessoaRepositoryTest {
 
     public static final String TELEFONE_INEXISTENTE = "99957014";
-    
+
     @Autowired
     private PessoaRepository sut;
 
