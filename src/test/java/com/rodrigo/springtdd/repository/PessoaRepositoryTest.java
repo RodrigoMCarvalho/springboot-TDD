@@ -23,6 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Sql(value = "/clean-database.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class PessoaRepositoryTest {
 
+    public static final String TELEFONE_INEXISTENTE = "99957014";
+    
     @Autowired
     private PessoaRepository sut;
 
@@ -82,14 +84,34 @@ public class PessoaRepositoryTest {
         assertThat(pessoas.size()).isEqualTo(3);
     }
 
+    @Test
+    public void deveFiltrarPessoaPorFiltroComposto() {
+        PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setCpf("78");
+        filtro.setNome("a");
 
+        List<Pessoa> pessoas = sut.filtrar(filtro);
 
+        assertThat(pessoas.size()).isEqualTo(2);
+    }
 
+    @Test
+    public void deveFiltrarPessoaPorDddDoTelefone() {
+        PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setDdd("41");
 
+        List<Pessoa> pessoas = sut.filtrar(filtro);
 
+        assertThat(pessoas.size()).isEqualTo(1);
+    }
 
+    @Test
+    public void deveFiltrarPessoaPorNumeroDoTelefone() {
+        PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setTelefone(TELEFONE_INEXISTENTE);
 
+        List<Pessoa> pessoas = sut.filtrar(filtro);
 
-
-
+        assertThat(pessoas.size()).isZero();
+    }
 }

@@ -23,26 +23,42 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQueries {
         final StringBuilder sb = new StringBuilder();
         final Map<String, Object> params = new HashMap<>();
 
-        sb.append(" SELECT p FROM Pessoa p WHERE 1=1 ");
+        sb.append(" SELECT p FROM Pessoa p JOIN p.telefones tele WHERE 1=1 ");
 
         preencherNome(filtro, sb, params);
         preencherCpf(filtro, sb, params);
+        preencherDdd(filtro, sb, params);
+        preencherTelefone(filtro, sb, params);
 
         Query query = entityManager.createQuery(sb.toString(), Pessoa.class);
         obterParametros(params, query);
         return query.getResultList();
     }
 
+    private void preencherTelefone(PessoaFiltro filtro, StringBuilder sb, Map<String, Object> params) {
+        if(StringUtils.hasText(filtro.getTelefone())) {
+            sb.append(" AND tele.numero = :numero");
+            params.put("numero", filtro.getTelefone());
+        }
+    }
+
+    private void preencherDdd(PessoaFiltro filtro, StringBuilder sb, Map<String, Object> params) {
+        if(StringUtils.hasText(filtro.getDdd())) {
+            sb.append(" AND tele.ddd = :ddd");
+            params.put("ddd", filtro.getDdd());
+        }
+    }
+
     private void preencherCpf(PessoaFiltro filtro, StringBuilder sb, Map<String, Object> params) {
         if(StringUtils.hasText(filtro.getCpf())) {
-            sb.append(" AND p.cpf LIKE : cpf");
+            sb.append(" AND p.cpf LIKE :cpf");
             params.put("cpf", "%" + filtro.getCpf() + "%");
         }
     }
 
     private void preencherNome(PessoaFiltro filtro, StringBuilder sb, Map<String, Object> params) {
         if(StringUtils.hasText(filtro.getNome())) {
-            sb.append(" AND p.nome LIKE : nome");
+            sb.append(" AND p.nome LIKE :nome");
             params.put("nome", "%" + filtro.getNome() + "%");
         }
     }
