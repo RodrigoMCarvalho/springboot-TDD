@@ -8,10 +8,12 @@ import com.rodrigo.springtdd.model.Pessoa;
 import com.rodrigo.springtdd.model.Telefone;
 import com.rodrigo.springtdd.repository.PessoaRepository;
 import com.rodrigo.springtdd.service.PessoaService;
+import org.springframework.stereotype.Service;
 
 
 import java.util.Optional;
 
+@Service
 public class PessoaServiceImpl implements PessoaService {
 
     private final PessoaRepository repository;

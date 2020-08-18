@@ -2,6 +2,7 @@ package com.rodrigo.springtdd.resources;
 
 import com.rodrigo.springtdd.SpringTddApplicationTests;
 import io.restassured.RestAssured;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
@@ -14,8 +15,10 @@ public class PessoaResourceTest extends SpringTddApplicationTests {
                 .pathParam("numero","35006330")
             .get("/pessoas/{ddd}/{numero}")
             .then()
+                .log().body().and()
                 .statusCode(HttpStatus.OK.value())
-                .and()
-                .body();
+                .body("codigo", Matchers.equalTo(3),
+                        "nome", Matchers.equalTo("Cauê"),
+                        "cpf", Matchers.equalTo("38767897100"));
     }
 }

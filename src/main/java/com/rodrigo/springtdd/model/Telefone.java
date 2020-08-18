@@ -1,5 +1,7 @@
 package com.rodrigo.springtdd.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +20,7 @@ public class Telefone {
 
     @ManyToOne
     @JoinColumn(name = "codigo_pessoa")
+    @JsonIgnore
     private Pessoa pessoa;
 
     public Long getCodigo() {

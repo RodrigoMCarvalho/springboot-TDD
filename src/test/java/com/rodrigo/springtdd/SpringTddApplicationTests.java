@@ -22,6 +22,6 @@ public abstract class SpringTddApplicationTests {
 
 	@Before
 	public void setUp() throws Exception {
-		RestAssured.port = porta;
+		RestAssured.port = porta;   //configuracao para o RestAssured funcionar
 	}
 }
