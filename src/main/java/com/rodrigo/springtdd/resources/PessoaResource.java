@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pessoas")
 public class PessoaResource {
@@ -19,12 +21,17 @@ public class PessoaResource {
     @Autowired
     private PessoaService pessoaService;
 
-    @GetMapping("{/ddd}/{numero}")
+    @GetMapping("{/{ddd}/{numero}")
     public ResponseEntity<Pessoa> buscarPorDddeTelefone(@PathVariable("ddd") String ddd, @PathVariable("numero") String numero) throws TelefoneNotFoundException {
         Telefone telefone = new Telefone();
         telefone.setDdd(ddd);
         telefone.setNumero(numero);
         Pessoa pessoa = pessoaService.buscarPorTelefone(telefone);
         return new ResponseEntity<>(pessoa, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity <List<Pessoa>> buscarTodos(){
+        return new ResponseEntity<List<Pessoa>>(pessoaService.buscarTodos(), HttpStatus.OK);
     }
 }

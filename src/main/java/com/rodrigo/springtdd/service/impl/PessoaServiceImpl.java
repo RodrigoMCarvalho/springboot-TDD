@@ -11,6 +11,7 @@ import com.rodrigo.springtdd.service.PessoaService;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,6 +50,11 @@ public class PessoaServiceImpl implements PessoaService {
     public Pessoa buscarPorCpf(String cpf) throws CpfNotFoundException {
         Optional<Pessoa> optional = repository.findByCpf(cpf);
         return optional.orElseThrow(() -> new CpfNotFoundException("CPF inválido"));
+    }
+
+    @Override
+    public List<Pessoa> buscarTodos() {
+        return repository.findAll();
     }
 
 }

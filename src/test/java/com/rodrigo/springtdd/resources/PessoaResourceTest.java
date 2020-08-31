@@ -11,8 +11,8 @@ public class PessoaResourceTest extends SpringTddApplicationTests {
     @Test
     public void deveProcurarPessoaPorDddENumeroTelefone() {
         RestAssured.given()
-                .pathParam("ddd", "86")
-                .pathParam("numero","35006330")
+                .pathParam("ddd", "41")
+                .pathParam("numero","999570146")
             .get("/pessoas/{ddd}/{numero}")
             .then()
                 .log().body().and()
