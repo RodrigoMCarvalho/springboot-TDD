@@ -21,8 +21,9 @@ public class PessoaResource {
     @Autowired
     private PessoaService pessoaService;
 
-    @GetMapping("{/{ddd}/{numero}")
-    public ResponseEntity<Pessoa> buscarPorDddeTelefone(@PathVariable("ddd") String ddd, @PathVariable("numero") String numero) throws TelefoneNotFoundException {
+    @GetMapping("/{ddd}/{numero}")
+    public ResponseEntity<Pessoa> buscarPorDddeTelefone(@PathVariable("ddd") String ddd,
+                                                        @PathVariable("numero") String numero) throws TelefoneNotFoundException {
         Telefone telefone = new Telefone();
         telefone.setDdd(ddd);
         telefone.setNumero(numero);

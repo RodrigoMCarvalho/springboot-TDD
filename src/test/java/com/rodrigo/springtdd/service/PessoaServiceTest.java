@@ -80,6 +80,14 @@ public class PessoaServiceTest {
         pessoaService.buscarPorTelefone(TelefoneBuilder.umTelefone().builder());
     }
 
+    @Test
+    public void deveRetornarDadosDoTelefoneDentroDeelefoneNotFoundException() throws TelefoneNotFoundException {
+        exception.expect(TelefoneNotFoundException.class);
+        exception.expectMessage("Não existe pessoa com o telefone (" + DDD + ")" + TELEFONE);
+
+        pessoaService.buscarPorTelefone(TelefoneBuilder.umTelefone().builder());
+    }
+
     @Test(expected = CpfNotFoundException.class)
     public void deveLancarCPFException() throws Exception{
         Pessoa pessoa = PessoaBuilder.umaPessoa().comCPF("455555555").builder();

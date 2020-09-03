@@ -17,8 +17,20 @@ public class PessoaResourceTest extends SpringTddApplicationTests {
             .then()
                 .log().body().and()
                 .statusCode(HttpStatus.OK.value())
-                .body("codigo", Matchers.equalTo(3),
-                        "nome", Matchers.equalTo("Cauê"),
-                        "cpf", Matchers.equalTo("38767897100"));
+                .body("codigo", Matchers.equalTo(1),
+                        "nome", Matchers.equalTo("Iago"),
+                        "cpf", Matchers.equalTo("86730543540"));
+    }
+
+    @Test
+    public void deveRetornarNaoEncontradoQuandoBuscarPessoaPorTelefoneInexistente() {
+        RestAssured.given()
+                .pathParam("ddd", "55")
+                .pathParam("numero", "12345678")
+            .get("/pessoas/{ddd}/{numero}")
+                .then()
+                .log().body().and()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("erro", Matchers.equalTo("Não existe pessoa com o telefone (55)12345678"));
     }
 }
