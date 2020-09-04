@@ -19,7 +19,12 @@ public class TelefoneBuilder {
         return builder;
     }
 
-    public Telefone builder() {
+    public  TelefoneBuilder comDDD(String ddd) {
+        telefone.setDdd(ddd);
+        return this;
+    }
+
+    public Telefone build() {
         return this.telefone;
     }
 }

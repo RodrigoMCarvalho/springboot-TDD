@@ -42,7 +42,7 @@ public class PessoaServiceTest {
     @Before
     public void setup() {
         pessoaService = new PessoaServiceImpl(pessoaRepository);
-        pessoa = PessoaBuilder.umaPessoa().builder();
+        pessoa = PessoaBuilder.umaPessoa().build();
     }
 
     @Test
@@ -67,7 +67,7 @@ public class PessoaServiceTest {
     public void deveBuscarPessoaPorTelefone() throws Exception {
         when(pessoaRepository.findByTelefoneDddAndTelefoneNumero(DDD, TELEFONE)).thenReturn(Optional.of(pessoa));
 
-        Pessoa pessoa = pessoaService.buscarPorTelefone(TelefoneBuilder.umTelefone().builder());
+        Pessoa pessoa = pessoaService.buscarPorTelefone(TelefoneBuilder.umTelefone().build());
 
         verify(pessoaRepository).findByTelefoneDddAndTelefoneNumero(DDD, TELEFONE);
         assertThat(pessoa).isNotNull();
@@ -77,7 +77,7 @@ public class PessoaServiceTest {
 
     @Test(expected = TelefoneNotFoundException.class)
     public void deveLancarTelefoneException() throws Exception {
-        pessoaService.buscarPorTelefone(TelefoneBuilder.umTelefone().builder());
+        pessoaService.buscarPorTelefone(TelefoneBuilder.umTelefone().build());
     }
 
     @Test
@@ -85,18 +85,18 @@ public class PessoaServiceTest {
         exception.expect(TelefoneNotFoundException.class);
         exception.expectMessage("Não existe pessoa com o telefone (" + DDD + ")" + TELEFONE);
 
-        pessoaService.buscarPorTelefone(TelefoneBuilder.umTelefone().builder());
+        pessoaService.buscarPorTelefone(TelefoneBuilder.umTelefone().build());
     }
 
     @Test(expected = CpfNotFoundException.class)
     public void deveLancarCPFException() throws Exception{
-        Pessoa pessoa = PessoaBuilder.umaPessoa().comCPF("455555555").builder();
+        Pessoa pessoa = PessoaBuilder.umaPessoa().comCPF("455555555").build();
         Pessoa p = pessoaService.buscarPorCpf(pessoa.getCpf());
     }
 
     @Test
     public void deveReceberMsgCpfInvalido() throws Exception{
-        Pessoa pessoa = PessoaBuilder.umaPessoa().comCPF("455555555").builder();
+        Pessoa pessoa = PessoaBuilder.umaPessoa().comCPF("455555555").build();
 
         exception.expect(CpfNotFoundException.class);
         exception.expectMessage("CPF inválido");

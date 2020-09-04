@@ -18,7 +18,7 @@ public class PessoaBuilder {
         builder.pessoa = new Pessoa();
         builder.pessoa.setNome(NOME);
         builder.pessoa.setCpf(CPF);
-        builder.pessoa.setTelefones(Arrays.asList(TelefoneBuilder.umTelefone().builder()));
+        builder.pessoa.setTelefones(Arrays.asList(TelefoneBuilder.umTelefone().build()));
         return builder;
     }
 
@@ -32,7 +32,7 @@ public class PessoaBuilder {
         return this;
     }
 
-    public Pessoa builder() {
+    public Pessoa build() {
         return this.pessoa;
     }
 }

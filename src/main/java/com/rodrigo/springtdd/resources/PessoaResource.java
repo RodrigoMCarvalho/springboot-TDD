@@ -1,17 +1,19 @@
 package com.rodrigo.springtdd.resources;
 
 import com.rodrigo.springtdd.exception.TelefoneNotFoundException;
+import com.rodrigo.springtdd.exception.UnicidadeCPFException;
+import com.rodrigo.springtdd.exception.UnicidadeTelefoneException;
 import com.rodrigo.springtdd.model.Pessoa;
 import com.rodrigo.springtdd.model.Telefone;
 import com.rodrigo.springtdd.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -34,5 +36,14 @@ public class PessoaResource {
     @GetMapping
     public ResponseEntity <List<Pessoa>> buscarTodos(){
         return new ResponseEntity<List<Pessoa>>(pessoaService.buscarTodos(), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Pessoa> salvarPessoa(@RequestBody Pessoa pessoa, HttpServletResponse response) throws UnicidadeCPFException, UnicidadeTelefoneException {
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{ddd}/{numero}")
+                .buildAndExpand(pessoa.getTelefones().get(0).getDdd(), pessoa.getTelefones().get(0).getNumero()).toUri();
+        response.setHeader("Location", uri.toASCIIString());
+
+        return new ResponseEntity<>(pessoaService.salvar(pessoa), HttpStatus.CREATED);
     }
 }

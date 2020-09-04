@@ -1,10 +1,18 @@
 package com.rodrigo.springtdd.resources;
 
 import com.rodrigo.springtdd.SpringTddApplicationTests;
+import com.rodrigo.springtdd.builders.PessoaBuilder;
+import com.rodrigo.springtdd.builders.TelefoneBuilder;
+import com.rodrigo.springtdd.model.Pessoa;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
+
+import java.util.Arrays;
+
+import static io.restassured.RestAssured.when;
 
 public class PessoaResourceTest extends SpringTddApplicationTests {
 
@@ -33,4 +41,45 @@ public class PessoaResourceTest extends SpringTddApplicationTests {
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("erro", Matchers.equalTo("Não existe pessoa com o telefone (55)12345678"));
     }
+
+    @Test
+    public void deveSalvarPessoa() {
+        Pessoa pessoa = PessoaBuilder
+                .umaPessoa()
+                .comNome("Gustavo")
+                .comCPF("97880403140")
+                .build();
+        pessoa.setTelefones(Arrays.asList(TelefoneBuilder.umTelefone().comDDD("55").build()));
+
+        RestAssured.given()
+                .request()
+                .header("Accept", ContentType.ANY)
+                .header("Content-type", ContentType.JSON)
+                .body(pessoa)
+            .when()
+            .post("/pessoas")
+            .then()
+                .log().headers()
+            .and()
+                .log().body()
+            .and()
+                .statusCode(HttpStatus.CREATED.value())
+                .header("Location", Matchers.equalTo("http://localhost:" + porta + "/pessoas/55/12345678"))
+                .body("codigo", Matchers.equalTo(6),
+                        "nome", Matchers.equalTo("Gustavo"),
+                        "cpf", Matchers.equalTo("97880403140"));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }

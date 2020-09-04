@@ -29,7 +29,6 @@ public class PessoaServiceImpl implements PessoaService {
         if(pessoaCPF.isPresent()) {
             throw new UnicidadeCPFException();
         }
-
         String ddd = pessoa.getTelefones().get(0).getDdd();
         String numero = pessoa.getTelefones().get(0).getNumero();
         Optional<Pessoa> telefone = repository.findByTelefoneDddAndTelefoneNumero(ddd, numero);
