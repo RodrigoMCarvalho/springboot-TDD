@@ -20,8 +20,12 @@ import java.util.List;
 @RequestMapping("/pessoas")
 public class PessoaResource {
 
-    @Autowired
     private PessoaService pessoaService;
+
+    @Autowired
+    public void setPessoaService(PessoaService pessoaService) {
+        this.pessoaService = pessoaService;
+    }
 
     @GetMapping("/{ddd}/{numero}")
     public ResponseEntity<Pessoa> buscarPorDddeTelefone(@PathVariable("ddd") String ddd,
@@ -40,6 +44,7 @@ public class PessoaResource {
 
     @PostMapping
     public ResponseEntity<Pessoa> salvarPessoa(@RequestBody Pessoa pessoa, HttpServletResponse response) throws UnicidadeCPFException, UnicidadeTelefoneException {
+
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{ddd}/{numero}")
                 .buildAndExpand(pessoa.getTelefones().get(0).getDdd(), pessoa.getTelefones().get(0).getNumero()).toUri();
         response.setHeader("Location", uri.toASCIIString());
