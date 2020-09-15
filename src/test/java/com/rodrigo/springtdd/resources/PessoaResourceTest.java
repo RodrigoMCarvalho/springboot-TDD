@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
 
-import static io.restassured.RestAssured.when;
-
 public class PessoaResourceTest extends SpringTddApplicationTests {
 
     @Test
@@ -70,6 +68,41 @@ public class PessoaResourceTest extends SpringTddApplicationTests {
                         "cpf", Matchers.equalTo("97880403140"));
 
     }
+
+    @Test
+    public void naoDeveSalvarDuasPessoasComOMesmoCPF() {
+        Pessoa pessoa = PessoaBuilder
+                .umaPessoa()
+                .comNome("Gustavo")
+                .comCPF("72788740417")
+                .build();
+        pessoa.setTelefones(Arrays.asList(TelefoneBuilder.umTelefone().build()));
+
+        RestAssured.given()
+                .request()
+                .header("Accept", ContentType.ANY)
+                .header("Content-type", ContentType.JSON)
+                .body(pessoa)
+            .when()
+            .post("/pessoas")
+                .then()
+                    .log().body()
+                .and()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .body("erro", Matchers.equalTo("Já existe pessoa cadastrada com o CPF 72788740417"));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

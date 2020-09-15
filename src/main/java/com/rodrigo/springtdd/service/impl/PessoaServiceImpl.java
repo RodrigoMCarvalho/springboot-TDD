@@ -29,7 +29,7 @@ public class PessoaServiceImpl implements PessoaService {
     public Pessoa salvar(Pessoa pessoa) throws UnicidadeTelefoneException, UnicidadeCPFException {
         Optional<Pessoa> pessoaCPF = repository.findByCpf(pessoa.getCpf());
         if(pessoaCPF.isPresent()) {
-            throw new UnicidadeCPFException();
+            throw new UnicidadeCPFException("Já existe pessoa cadastrada com o CPF " + pessoa.getCpf());
         }
         String ddd = pessoa.getTelefones().get(0).getDdd();
         String numero = pessoa.getTelefones().get(0).getNumero();
@@ -39,7 +39,6 @@ public class PessoaServiceImpl implements PessoaService {
         }
         return repository.save(pessoa);
     }
-
 
     @Override
     public Pessoa buscarPorTelefone(Telefone telefone) throws TelefoneNotFoundException {

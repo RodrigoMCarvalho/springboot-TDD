@@ -12,4 +12,9 @@ public class PessoaExceptionHandler {
     public ResponseEntity<?> handlerTelefoneNaoEncontradoException(TelefoneNotFoundException e) {
         return new ResponseEntity<>(new RespostaErro(e.getMessage()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(UnicidadeCPFException.class)
+    public ResponseEntity<?> handlerUnicidadeCPFException(UnicidadeCPFException e) {
+        return new ResponseEntity<>(new RespostaErro(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
 }

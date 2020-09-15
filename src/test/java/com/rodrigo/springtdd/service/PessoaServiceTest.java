@@ -1,5 +1,6 @@
 package com.rodrigo.springtdd.service;
 
+import com.rodrigo.springtdd.SpringTddApplicationTests;
 import com.rodrigo.springtdd.builders.TelefoneBuilder;
 import com.rodrigo.springtdd.builders.PessoaBuilder;
 import com.rodrigo.springtdd.exception.CpfNotFoundException;
@@ -22,8 +23,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-public class PessoaServiceTest {
+//@RunWith(SpringRunner.class)
+public class PessoaServiceTest extends SpringTddApplicationTests {
 
     private static final String CPF = "12345678";
     private static final String DDD = "55";
@@ -92,6 +93,16 @@ public class PessoaServiceTest {
     public void deveLancarCPFException() throws Exception{
         Pessoa pessoa = PessoaBuilder.umaPessoa().comCPF("455555555").build();
         Pessoa p = pessoaService.buscarPorCpf(pessoa.getCpf());
+    }
+
+    @Test
+    public void naoDeveSalvarDuasPessoasComOMesmoCPFService() throws UnicidadeCPFException, UnicidadeTelefoneException {
+        when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.of(pessoa));
+
+        exception.expect(UnicidadeCPFException.class);
+        exception.expectMessage("Já existe pessoa cadastrada com o CPF " + CPF);
+
+        pessoaService.salvar(pessoa);
     }
 
     @Test
