@@ -4,6 +4,7 @@ import com.rodrigo.springtdd.exception.CpfNotFoundException;
 import com.rodrigo.springtdd.exception.TelefoneNotFoundException;
 import com.rodrigo.springtdd.exception.UnicidadeCPFException;
 import com.rodrigo.springtdd.exception.UnicidadeTelefoneException;
+import com.rodrigo.springtdd.filtro.PessoaFiltro;
 import com.rodrigo.springtdd.model.Pessoa;
 import com.rodrigo.springtdd.model.Telefone;
 import com.rodrigo.springtdd.repository.PessoaRepository;
@@ -55,6 +56,11 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     public List<Pessoa> buscarTodos() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<Pessoa> buscarPorFiltro(PessoaFiltro filtro) {
+        return repository.filtrar(filtro);
     }
 
 }

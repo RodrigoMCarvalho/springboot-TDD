@@ -4,6 +4,7 @@ import com.rodrigo.springtdd.exception.CpfNotFoundException;
 import com.rodrigo.springtdd.exception.TelefoneNotFoundException;
 import com.rodrigo.springtdd.exception.UnicidadeCPFException;
 import com.rodrigo.springtdd.exception.UnicidadeTelefoneException;
+import com.rodrigo.springtdd.filtro.PessoaFiltro;
 import com.rodrigo.springtdd.model.Pessoa;
 import com.rodrigo.springtdd.model.Telefone;
 
@@ -15,4 +16,5 @@ public interface PessoaService {
     Pessoa buscarPorTelefone(Telefone telefone) throws TelefoneNotFoundException;
     Pessoa buscarPorCpf(String cpf) throws CpfNotFoundException;
     List<Pessoa> buscarTodos();
+    List<Pessoa> buscarPorFiltro(PessoaFiltro filtro);
 }

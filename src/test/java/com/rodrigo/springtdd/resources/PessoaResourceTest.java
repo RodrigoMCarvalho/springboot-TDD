@@ -3,11 +3,13 @@ package com.rodrigo.springtdd.resources;
 import com.rodrigo.springtdd.SpringTddApplicationTests;
 import com.rodrigo.springtdd.builders.PessoaBuilder;
 import com.rodrigo.springtdd.builders.TelefoneBuilder;
+import com.rodrigo.springtdd.filtro.PessoaFiltro;
 import com.rodrigo.springtdd.model.Pessoa;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.junit.platform.engine.TestExecutionResult;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
@@ -93,13 +95,27 @@ public class PessoaResourceTest extends SpringTddApplicationTests {
 
     }
 
+    @Test
+    public void deveFiltrarPeloNome() {
+        PessoaFiltro filtro = new PessoaFiltro();
+        filtro.setNome("a");
 
+        RestAssured.given()
+                .request()
+                .header("Accept", ContentType.ANY)
+                .header("Content-type", ContentType.JSON)
+                .body(filtro)
+            .when()
+            .get("/pessoas/filtrar")
+            .then()
+                .log().body()
+            .and()
+                .statusCode(HttpStatus.OK.value())
+                .body("codigo", Matchers.containsInAnyOrder(1,3,5),
+                        "nome", Matchers.containsInAnyOrder("Thiago", "Iago", "Cauê"),
+                        "cpf", Matchers.containsInAnyOrder("72788740417","86730543540","38767897100"));
 
-
-
-
-
-
+    }
 
 
 
